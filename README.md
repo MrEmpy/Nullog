@@ -3,7 +3,15 @@
 
 ![](image.png)
 
-# [!] HOW TO INSTALL:
+# What does it clean?
+
+**[+] wtmp**
+**[+] btmp**
+**[+] lastlog**
+**[+] .bash_history**
+**[+] all .log files**
+
+# How to Install:
 
 **git clone https://github.com/MrEmpy/nullog.git**
 
