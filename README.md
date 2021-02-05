@@ -6,9 +6,13 @@
 # What does it clean?
 
 **[+] wtmp**
+
 **[+] btmp**
+
 **[+] lastlog**
+
 **[+] .bash_history**
+
 **[+] all .log files**
 
 # How to Install:
