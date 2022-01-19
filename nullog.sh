@@ -49,6 +49,13 @@ other_logs() {
     cat /dev/null /var/log/messages 2>/dev/null
     cat /dev/null /var/log/maillog 2>/dev/null
     cat /dev/null /var/log/secure 2>/dev/null
+    cat /dev/null /var/log/syslog 2>/dev/null
+    cat /dev/null /var/log/dmesg 2>/dev/null
+
+    for mail_f in $(find /var/log/ -name "mail\.*" 2>/dev/null)
+        do
+            cat /dev/null $mail_f 2>/dev/null
+    done
 }
 
 bash_history() {
