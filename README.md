@@ -12,6 +12,10 @@
 
 * lastlog
 
+* maillog
+
+* messages
+
 * .bash_history
 
 * all .log files
