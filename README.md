@@ -1,28 +1,29 @@
-# Nullog
-**「🧹」Clear logs after an invasion**
+<h1 align="center">「🧹」About Nullog</h1>
 
-![](image.png)
+<a><p align="center">Nullog is a tool created in Shell Script with the aim of automating the cleaning of logs after an invasion of a Linux system.</p></a>
+
+<p align="center"><img src="image.png"></p>
 
 # What does it clean?
 
-**[+] wtmp**
+* wtmp
 
-**[+] btmp**
+* btmp
 
-**[+] lastlog**
+* lastlog
 
-**[+] .bash_history**
+* .bash_history
 
-**[+] all .log files**
+* all .log files
 
 # How to Install:
 
-**git clone https://github.com/MrEmpy/nullog.git**
+```
+$ git clone https://github.com/MrEmpy/nullog.git
 
-**cd nullog**
+$ cd nullog 
 
-**(Copy it to a server that wants to clear the logs. Once sent to the server, run with:)**
+$ chmod +x nullog.sh
 
-**chmod +x nullog.sh**
-
-**./nullog.sh OR sh nullog.sh**
+$ ./nullog.sh
+```
