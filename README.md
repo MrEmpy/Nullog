@@ -14,6 +14,10 @@
 
 * maillog
 
+* syslog
+
+* dmesg
+
 * messages
 
 * .bash_history
