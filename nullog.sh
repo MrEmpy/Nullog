@@ -53,10 +53,16 @@ bash_history() {
 }
 
 logs_f() {
-    for log_f in $(find / -name "*\.log\.*" 2>/dev/null;find / -name "*\.log\.*\.*" 2>/dev/null;find / -name "*\.*\.log\.*" 2>/dev/null)
+    find / -name "*\.log\.*" 2>/dev/null >> .logs
+    find / -name "*\.log\.*\.*" 2>/dev/null >> .logs
+    find / -name "*\.*\.log\.*" 2>/dev/null >> .logs
+
+    while read log_f
         do
-            echo > $log_f
-    done
+            echo > $log 2>&1
+            printf "\n\033[0;32m[+] \033[0;37mLog deleted: $log_f"
+    done<.logs
+    rm -f .logs
 }
 
 main() {
