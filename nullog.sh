@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/sh
 
 banner() {
     printf '\033[0;31m
