@@ -65,6 +65,13 @@ bash_history() {
     done
 }
 
+zsh_history() {
+    for zsh_history in $(find / -name ".zsh_history" 2>/dev/null)
+        do
+            cat /dev/null $zsh_history 2>/dev/null
+    done
+}
+
 logs_f() {
     find / -name "*\.log\.*" 2>/dev/null >> .logs
     find / -name "*\.log\.*\.*" 2>/dev/null >> .logs
@@ -89,10 +96,12 @@ main() {
     other_logs
     printf '\033[0;32m[+] \033[0;37mOther logs successfully deleted!\n'
     sleep 1
-    printf '\n\033[0;34m[*] \033[0;37mClearing system histories\n'
+    printf '\n\033[0;34m[*] \033[0;37mClearing Bash histories\n'
     bash_history
-    printf '\n\n\033[0;32m[+] \033[0;37mSystem history deleted successfully!\n'
+    printf '\n\033[0;34m[*] \033[0;37mClearing Zsh histories\n'
+    zsh_history
     sleep 1
+    printf '\n\n\033[0;32m[+] \033[0;37mSystem history deleted successfully!\n'
     printf '\n\033[0;34m[*] \033[0;37mDeleting content inside log files'
     logs_f
     printf '\n\n\033[0;32m[+] \033[0;37mLog files cleared successfully!\n'
