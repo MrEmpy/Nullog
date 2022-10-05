@@ -22,6 +22,8 @@
 
 * .bash_history
 
+* .zsh_history
+
 * all .log files
 
 # How to Install:
