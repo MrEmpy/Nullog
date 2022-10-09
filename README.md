@@ -24,6 +24,10 @@
 
 * .zsh_history
 
+* Mac Logs - Normal (/Library)
+
+* Mac Logs - Root (~/Library)
+
 * all .log files
 
 # How to Install:
