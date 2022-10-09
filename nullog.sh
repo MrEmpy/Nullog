@@ -72,6 +72,23 @@ zsh_history() {
     done
 }
 
+mac_root_logs() {
+
+    for mac_root_logs in $(find ~/Library  -name "*.log" 2>/dev/null)
+        do
+            cat /dev/null $mac_root_logs 2>/dev/null
+    done
+}
+
+mac_normal_logs() {
+    
+    for mac_normal_logs in $(find /Library  -name "*.log" 2>/dev/null)
+        do
+            cat /dev/null $mac_normal_logs 2>/dev/null
+    done
+    
+}
+
 logs_f() {
     find / -name "*\.log\.*" 2>/dev/null >> .logs
     find / -name "*\.log\.*\.*" 2>/dev/null >> .logs
@@ -101,6 +118,11 @@ main() {
     printf '\n\033[0;34m[*] \033[0;37mClearing Zsh histories\n'
     zsh_history
     sleep 1
+    printf '\n\033[0;34m[*] \033[0;37mClearing Mac root logs\n'
+    mac_root_logs()
+    sleep 1
+    printf '\n\033[0;34m[*] \033[0;37mClearing Mac normal logs\n'
+    mac_normal_logs()
     printf '\n\n\033[0;32m[+] \033[0;37mSystem history deleted successfully!\n'
     printf '\n\033[0;34m[*] \033[0;37mDeleting content inside log files'
     logs_f
